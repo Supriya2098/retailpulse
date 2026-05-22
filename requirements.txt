@@ -15,3 +15,9 @@ evidently
 great-expectations
 seaborn
 scipy
+fastapi
+uvicorn
+prometheus-client
+    
+
+
