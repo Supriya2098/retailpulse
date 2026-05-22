@@ -3,8 +3,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-from app.utils.export_utils import export_pdf
 
+from utils.export_utils import export_pdf
 # ============================================================
 # LOAD DATA
 # ============================================================
