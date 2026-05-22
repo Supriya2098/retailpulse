@@ -1,8 +1,6 @@
 
 import streamlit as st
-
 import pandas as pd
-
 import numpy as np
 
 from app.utils.export_utils import export_pdf
@@ -22,6 +20,10 @@ def load_inventory():
         )
 
     except:
+
+        # ====================================================
+        # MOCK DATA FALLBACK
+        # ====================================================
 
         recs = pd.DataFrame({
 
@@ -49,15 +51,65 @@ def load_inventory():
 
             ],
 
-            "LeadTime": [7, 10, 5, 12],
+            "LeadTime": [
 
-            "CurrentStock": [40, 12, 70, 8],
+                7,
 
-            "ReorderPoint": [50, 25, 65, 20],
+                10,
 
-            "ReorderNow": [True, True, False, True],
+                5,
 
-            "RecommendedQty": [120, 80, 0, 150]
+                12
+
+            ],
+
+            "CurrentStock": [
+
+                40,
+
+                12,
+
+                70,
+
+                8
+
+            ],
+
+            "ReorderPoint": [
+
+                50,
+
+                25,
+
+                65,
+
+                20
+
+            ],
+
+            "ReorderNow": [
+
+                True,
+
+                True,
+
+                False,
+
+                True
+
+            ],
+
+            "RecommendedQty": [
+
+                120,
+
+                80,
+
+                0,
+
+                150
+
+            ]
 
         })
 
@@ -70,9 +122,11 @@ def load_inventory():
 def render():
 
     st.title(
-
         "📦 Inventory Optimizer"
+    )
 
+    st.caption(
+        "AI-powered inventory planning and reorder optimization"
     )
 
     recs = load_inventory()
@@ -84,46 +138,54 @@ def render():
     k1, k2, k3, k4 = st.columns(4)
 
     k1.metric(
-
         "SKUs to Reorder",
-
         int(recs['ReorderNow'].sum())
-
     )
 
     k2.metric(
-
         "Avg Lead Time",
-
         f"{recs['LeadTime'].mean():.0f} days"
-
     )
 
     k3.metric(
-
         "Projected Stockout Reduction",
-
         "32.7%"
-
     )
 
     k4.metric(
-
         "Holding Cost Savings",
-
         "£18,400/yr"
-
     )
+
+    st.divider()
 
     # ========================================================
     # FILTERS
     # ========================================================
 
-    cat_filter = st.multiselect(
+    st.subheader(
+        "🔎 Inventory Filters"
+    )
+
+    col1, col2 = st.columns(2)
+
+    cat_filter = col1.multiselect(
 
         "Category",
 
-        sorted(recs['Category'].unique())
+        sorted(
+
+            recs['Category'].unique()
+
+        )
+
+    )
+
+    show_only = col2.checkbox(
+
+        "Show only items needing reorder",
+
+        value=True
 
     )
 
@@ -131,17 +193,13 @@ def render():
 
         recs = recs[
 
-            recs['Category'].isin(cat_filter)
+            recs['Category'].isin(
+
+                cat_filter
+
+            )
 
         ]
-
-    show_only = st.checkbox(
-
-        "Show only items needing reorder",
-
-        value=True
-
-    )
 
     if show_only:
 
@@ -155,6 +213,10 @@ def render():
     # TABLE
     # ========================================================
 
+    st.subheader(
+        "📋 Inventory Recommendations"
+    )
+
     st.dataframe(
 
         recs,
@@ -164,13 +226,39 @@ def render():
     )
 
     # ========================================================
+    # CHART
+    # ========================================================
+
+    st.subheader(
+        "📊 Recommended Reorder Quantities"
+    )
+
+    chart_df = recs[[
+
+        "StockCode",
+
+        "RecommendedQty"
+
+    ]]
+
+    st.bar_chart(
+
+        chart_df.set_index(
+
+            "StockCode"
+
+        )
+
+    )
+
+    st.divider()
+
+    # ========================================================
     # EXPORTS
     # ========================================================
 
     st.subheader(
-
         "📥 Export Reports"
-
     )
 
     csv_data = recs.to_csv(

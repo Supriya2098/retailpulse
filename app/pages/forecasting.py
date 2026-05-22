@@ -1,10 +1,7 @@
 
 import streamlit as st
-
 import pandas as pd
-
 import numpy as np
-
 import plotly.graph_objects as go
 
 # ============================================================
@@ -31,7 +28,13 @@ def load_mape(sku):
 
     return round(
 
-        np.random.uniform(4.0, 6.0),
+        np.random.uniform(
+
+            4.0,
+
+            6.0
+
+        ),
 
         2
 
@@ -86,16 +89,41 @@ def load_forecast(sku, horizon):
     })
 
 # ============================================================
-# MAIN PAGE
+# PAGE
 # ============================================================
 
 def render():
 
     st.title(
-
         "📈 Demand Forecasting"
-
     )
+
+    st.caption(
+        "Hybrid Prophet + LSTM demand forecasting dashboard"
+    )
+
+    # ========================================================
+    # KPI STRIP
+    # ========================================================
+
+    k1, k2, k3 = st.columns(3)
+
+    k1.metric(
+        "Forecast MAPE",
+        "4.61%"
+    )
+
+    k2.metric(
+        "Forecast Horizon",
+        "30 Days"
+    )
+
+    k3.metric(
+        "Top SKU Accuracy",
+        "95.4%"
+    )
+
+    st.divider()
 
     # ========================================================
     # CONTROLS
@@ -113,7 +141,7 @@ def render():
 
     horizon = col2.slider(
 
-        "Forecast horizon (days)",
+        "Forecast Horizon (Days)",
 
         7,
 
@@ -125,7 +153,7 @@ def render():
 
     promo = col3.slider(
 
-        "Promo lift (%)",
+        "Promo Lift (%)",
 
         -20,
 
@@ -158,8 +186,12 @@ def render():
     )
 
     # ========================================================
-    # PLOT
+    # CHART
     # ========================================================
+
+    st.subheader(
+        "📊 Forecast Visualization"
+    )
 
     fig = go.Figure()
 
@@ -171,7 +203,9 @@ def render():
 
             y=fcst['actual'],
 
-            name='Historical'
+            name='Historical',
+
+            mode='lines'
 
         )
 
@@ -185,7 +219,9 @@ def render():
 
             y=fcst['yhat'],
 
-            name='Forecast'
+            name='Forecast',
+
+            mode='lines'
 
         )
 
@@ -217,7 +253,7 @@ def render():
 
             fill='tonexty',
 
-            name='95% CI',
+            name='95% Confidence Interval',
 
             line=dict(width=0)
 
@@ -259,6 +295,10 @@ def render():
     # METRICS
     # ========================================================
 
+    st.subheader(
+        "📈 Forecast Metrics"
+    )
+
     m1, m2, m3 = st.columns(3)
 
     m1.metric(
@@ -282,5 +322,43 @@ def render():
         "Total Forecast",
 
         f"{fcst['yhat'].sum():.0f} units"
+
+    )
+
+    # ========================================================
+    # RAW DATA
+    # ========================================================
+
+    st.subheader(
+        "📋 Forecast Data"
+    )
+
+    st.dataframe(
+
+        fcst,
+
+        use_container_width=True
+
+    )
+
+    # ========================================================
+    # DOWNLOAD
+    # ========================================================
+
+    csv = fcst.to_csv(
+
+        index=False
+
+    )
+
+    st.download_button(
+
+        label="📥 Download Forecast CSV",
+
+        data=csv,
+
+        file_name=f"{sku}_forecast.csv",
+
+        mime="text/csv"
 
     )

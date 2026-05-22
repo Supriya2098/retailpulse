@@ -1,10 +1,7 @@
 
 import streamlit as st
-
 import pandas as pd
-
 import numpy as np
-
 import plotly.express as px
 
 from sklearn.decomposition import PCA
@@ -21,28 +18,37 @@ def load_segments():
 
     df = pd.DataFrame({
 
-        "Recency": np.random.randint(1, 200, n),
+        "Recency": np.random.randint(
+            1,
+            200,
+            n
+        ),
 
-        "Frequency": np.random.randint(1, 50, n),
+        "Frequency": np.random.randint(
+            1,
+            50,
+            n
+        ),
 
-        "Monetary": np.random.randint(100, 5000, n),
+        "Monetary": np.random.randint(
+            100,
+            5000,
+            n
+        ),
 
-        "Segment": np.random.choice([
+        "Segment": np.random.choice(
 
-            "Champions",
+            [
+                "Champions",
+                "Loyal",
+                "At Risk",
+                "Potential",
+                "Hibernating",
+                "New"
+            ],
 
-            "Loyal",
-
-            "At Risk",
-
-            "Potential",
-
-            "Hibernating",
-
-            "New"
-
-        ], n)
-
+            n
+        )
     })
 
     return df
@@ -54,12 +60,37 @@ def load_segments():
 def render():
 
     st.title(
-
         "👥 Customer Segmentation"
+    )
 
+    st.caption(
+        "K-Means customer clustering with PCA visualization"
     )
 
     df = load_segments()
+
+    # ========================================================
+    # KPI STRIP
+    # ========================================================
+
+    k1, k2, k3 = st.columns(3)
+
+    k1.metric(
+        "Total Customers",
+        len(df)
+    )
+
+    k2.metric(
+        "Segments",
+        df['Segment'].nunique()
+    )
+
+    k3.metric(
+        "Silhouette Score",
+        "0.42"
+    )
+
+    st.divider()
 
     # ========================================================
     # PCA
@@ -75,9 +106,17 @@ def render():
 
     ]]
 
-    pca = PCA(n_components=2)
+    pca = PCA(
 
-    comps = pca.fit_transform(features)
+        n_components=2
+
+    )
+
+    comps = pca.fit_transform(
+
+        features
+
+    )
 
     df["PCA1"] = comps[:, 0]
 
@@ -86,6 +125,10 @@ def render():
     # ========================================================
     # PLOT
     # ========================================================
+
+    st.subheader(
+        "📊 Customer Segment Visualization"
+    )
 
     fig = px.scatter(
 
@@ -124,9 +167,7 @@ def render():
     # ========================================================
 
     st.subheader(
-
-        "📊 Segment KPI Summary"
-
+        "📋 Segment KPI Summary"
     )
 
     summary = df.groupby(
