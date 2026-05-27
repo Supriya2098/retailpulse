@@ -22,6 +22,7 @@ st.set_page_config(
 # ============================================================
 
 st.sidebar.title(
+<<<<<<< HEAD
 
     "🛒 RetailPulse"
 
@@ -31,6 +32,13 @@ st.sidebar.caption(
 
     "AI-Powered Retail Analytics Platform"
 
+=======
+    "🛒 RetailPulse"
+)
+
+st.sidebar.caption(
+    "AI-Powered Retail Analytics Platform"
+>>>>>>> 9044d63e0b9bfb19ca3fa308c0ca1e1e3ef63b4e
 )
 
 st.sidebar.markdown("---")
@@ -62,6 +70,7 @@ page = st.sidebar.radio(
 )
 
 # ============================================================
+<<<<<<< HEAD
 # OVERVIEW PAGE
 # ============================================================
 
@@ -81,6 +90,22 @@ if page == "🏠 Overview":
 
     st.markdown("""
 
+=======
+# PAGE ROUTING
+# ============================================================
+
+if page.startswith("🏠"):
+
+    st.title(
+        "🚀 RetailPulse Dashboard"
+    )
+
+    st.subheader(
+        "AI-Powered Retail Analytics Platform"
+    )
+
+    st.markdown("""
+>>>>>>> 9044d63e0b9bfb19ca3fa308c0ca1e1e3ef63b4e
     ### Platform Features
 
     - 📈 Hybrid Demand Forecasting
@@ -90,8 +115,11 @@ if page == "🏠 Overview":
     - 🔬 Drift Monitoring
     - 🤖 Automated Retraining
     - ☁️ Cloud Deployment
+<<<<<<< HEAD
     - 📊 Prometheus + Grafana Monitoring
 
+=======
+>>>>>>> 9044d63e0b9bfb19ca3fa308c0ca1e1e3ef63b4e
     """)
 
     st.divider()
@@ -103,6 +131,7 @@ if page == "🏠 Overview":
     col1, col2, col3 = st.columns(3)
 
     col1.metric(
+<<<<<<< HEAD
 
         "Forecast MAPE",
 
@@ -124,6 +153,20 @@ if page == "🏠 Overview":
 
         "32%"
 
+=======
+        "Hybrid Forecast MAPE",
+        "4.61%"
+    )
+
+    col2.metric(
+        "Churn Model AUC",
+        "0.94"
+    )
+
+    col3.metric(
+        "Projected Stockout Reduction",
+        "32.7%"
+>>>>>>> 9044d63e0b9bfb19ca3fa308c0ca1e1e3ef63b4e
     )
 
     st.divider()
@@ -133,13 +176,18 @@ if page == "🏠 Overview":
     # ========================================================
 
     st.subheader(
+<<<<<<< HEAD
 
         "📊 System Overview"
 
+=======
+        "📊 System Overview"
+>>>>>>> 9044d63e0b9bfb19ca3fa308c0ca1e1e3ef63b4e
     )
 
     st.markdown("""
 
+<<<<<<< HEAD
     RetailPulse is an end-to-end AI-powered retail analytics platform built for:
 
     - Demand Forecasting
@@ -147,6 +195,15 @@ if page == "🏠 Overview":
     - Churn Prediction
     - Inventory Optimization
     - Real-Time Monitoring
+=======
+    RetailPulse is an end-to-end AI-powered retail analytics platform designed for:
+
+    - Demand Forecasting
+    - Customer Intelligence
+    - Churn Prediction
+    - Inventory Optimization
+    - Model Monitoring
+>>>>>>> 9044d63e0b9bfb19ca3fa308c0ca1e1e3ef63b4e
     - Automated ML Retraining
 
     ### Tech Stack
@@ -157,10 +214,14 @@ if page == "🏠 Overview":
     - XGBoost
     - MLflow
     - Evidently AI
+<<<<<<< HEAD
     - Docker
     - Kubernetes
     - Prometheus
     - Grafana
+=======
+    - Docker + Kubernetes
+>>>>>>> 9044d63e0b9bfb19ca3fa308c0ca1e1e3ef63b4e
 
     """)
 
@@ -168,9 +229,15 @@ if page == "🏠 Overview":
 # FORECASTING PAGE
 # ============================================================
 
+<<<<<<< HEAD
 elif page == "📈 Demand Forecasting":
 
     import app.pages.forecasting as p
+=======
+elif page.startswith("📈"):
+
+    from app.pages import forecasting as p
+>>>>>>> 9044d63e0b9bfb19ca3fa308c0ca1e1e3ef63b4e
 
     p.render()
 
@@ -178,9 +245,15 @@ elif page == "📈 Demand Forecasting":
 # SEGMENTS PAGE
 # ============================================================
 
+<<<<<<< HEAD
 elif page == "👥 Customer Segments":
 
     import app.pages.segments as p
+=======
+elif page.startswith("👥"):
+
+    from app.pages import segments as p
+>>>>>>> 9044d63e0b9bfb19ca3fa308c0ca1e1e3ef63b4e
 
     p.render()
 
@@ -188,9 +261,15 @@ elif page == "👥 Customer Segments":
 # CHURN PAGE
 # ============================================================
 
+<<<<<<< HEAD
 elif page == "⚠️ Churn Risk":
 
     import app.pages.churn as p
+=======
+elif page.startswith("⚠️"):
+
+    from app.pages import churn as p
+>>>>>>> 9044d63e0b9bfb19ca3fa308c0ca1e1e3ef63b4e
 
     p.render()
 
@@ -198,9 +277,15 @@ elif page == "⚠️ Churn Risk":
 # INVENTORY PAGE
 # ============================================================
 
+<<<<<<< HEAD
 elif page == "📦 Inventory Optimizer":
 
     import app.pages.inventory as p
+=======
+elif page.startswith("📦"):
+
+    from app.pages import inventory as p
+>>>>>>> 9044d63e0b9bfb19ca3fa308c0ca1e1e3ef63b4e
 
     p.render()
 
@@ -208,8 +293,14 @@ elif page == "📦 Inventory Optimizer":
 # MONITORING PAGE
 # ============================================================
 
+<<<<<<< HEAD
 elif page == "🔬 Model Monitoring":
 
     import app.pages.monitoring as p
+=======
+else:
+
+    from app.pages import monitoring as p
+>>>>>>> 9044d63e0b9bfb19ca3fa308c0ca1e1e3ef63b4e
 
     p.render()
