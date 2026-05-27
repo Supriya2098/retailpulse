@@ -150,21 +150,21 @@ if page == "🏠 Overview":
 
 elif page == "📈 Demand Forecasting":
 
-    import app.pages.forecasting as p
+    import pages.forecasting as p
 
     p.render()
 
 
 elif page == "👥 Customer Segments":
 
-    import app.pages.segments as p
+    import pages.segments as p
 
     p.render()
 
 
 elif page == "⚠️ Churn Risk":
 
-    import app.pages.churn as p
+    import pages.churn as p
 
     p.render()
 
@@ -172,13 +172,13 @@ elif page == "⚠️ Churn Risk":
 
 elif page == "📦 Inventory Optimizer":
 
-    import app.pages.inventory as p
+    import pages.inventory as p
 
     p.render()
 
 
 elif page == "🔬 Model Monitoring":
 
-    import app.pages.monitoring as p
+    import pages.monitoring as p
 
     p.render()
